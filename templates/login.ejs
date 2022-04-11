@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>로그인</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- 
+      html에 css나 js가 포함되는 방식은
+      - external
+        - 외부주소를 통해 연결, ~~.css , ~~.js 형식
+      - internal
+        - <script> .... </script> 
+        - </body>가 보이기 직전에 일반적으로 배치, 타이밍을 잘잡을수있으면 어디든 상관없다.
+        - 원칙, 내가 조작하고자 하는 html 코드 바로밑에 존재하면 문제없음
+      - inline
+        - <a onclick="javascript:....">
+     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>로그인</h1>
+    <div id="map"></div>
+    <fieldset>
+      <!-- form만 있다면 get방식 전송, 현재페이지가 전송페이지 주소가 된다. -->
+      <!-- id속성은 문서내에서 고유하게 저장된다(절대적이지는 않음) -->
+      <form method="post" id='loginForm'>
+        <input type="text" name='uid'/>
+        <input type='password' name='upw'/>
+        <input type='submit' value='로그인'/>
+      </form>
+    </fieldset>
+    <script>
+        //form 요소로 잡아서 submit 이벤트를 인터셉트해서 폼전송을 무효화 하겠다.
+        // 클라이언트 사이드 js의 원칙
+        // 1. 특정하라(특정 html 요소를 찾아라) => css selector
+        // jquery의 요소를 정의하는 문법 ->$('css selecter')
+        // 2.작업처리(이벤트처리, 통신처리, DOM조작(화면조작))
+        $('#loginForm').on('submit',evt=>{
+          // 1.이벤트 무효화
+          evt.preventDefault()
+          console.log('로그인 시도',$('#loginForm').serialize())
+
+          //ajax를 이용하여 로그인 처리
+          $.post({
+            url:'/users/login',
+            data: $('#loginForm').serialize(),  // 키=값 형태로 변환
+            dataType:'json',    // 서버가 응답하는 데이터는 json형식으로 응답
+            success:data=>{     // 통신성공
+              console.log(data)
+            },
+            error:err=>{        // 통신실패
+              console.log('실패',err)
+            }
+          } )
+
+          // 2. 이벤트무효화
+          return false
+        })
+    </script>
+  </body>
+</html>

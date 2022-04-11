@@ -1,0 +1,64 @@
+<!-- 모든 사이트는 특별하지 않는 이상 반복적인 패턴으로 조립이 된것이다 -->
+<!-- 화면 구성요소를 쪼개서 조립해서 하나의 페이지가 완성되도록 구성한다 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {# include "삽입할 페이지" or ['','','',...'] #}
+  {% include "com/head.html" ignore missing %}
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+    {% include "com/preloader.html" %}
+    {% include "com/navibar.html" %}
+    {% include "com/sidebar.html" %}
+    
+    {% include "pages/ml_detail.html" %}
+    
+    {% include "com/copyright.html" %}
+    {% include "com/right.html" %}    
+  </div>
+  
+  <!-- ./wrapper -->
+  {% include "com/foot.html" %}
+  <script>
+    function onLangDetected()
+    {
+      console.log('언어 감지 호출')
+      // 1. 통신
+      $.post({
+        url:'/service/ml',
+        data:'msg=' + $('#ori_src').val(),
+        dataType:'json',
+        success:res=>{
+          console.log( res )
+          // 화면에 언어 감지된 내용 출력
+          $('#result').html( res.na )
+          // 번역 요청 시작
+          trans_lang( $('#ori_src').val(), res.na )
+        },
+        error:err=>{
+          console.log( '오류', err )
+        }
+      })
+      // 2. 응답 결과 후처리
+    }
+    function trans_lang( ori_src, s_code )
+    {
+      $.post({
+        url:'/service/ml/trans',
+        data:`s_code=${s_code}&msg=${ori_src}`,
+        dataType:'json',
+        success:res=>{
+          console.log( res )
+          // 번역 결과를 화면에 출력
+          $('#trans_area').val( res.msg )
+        },
+        error:err=>{}
+      })
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!-- 모든사이트는 특별하지 않는 이상 반복적인 패턴으로 조립이 된것이다. -->
+<!-- 화면구성요소를 쪼개서 조립해 하나의 페이지가 완성되도록 구성한다. -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {# incluede "삽입할 페이지" or ['','','',....]#}
+  {# ignore missing은 파일이 없을시, 무시처리함#}
+  {% include "com/head.html" ignore missing%}
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+
+    {% include "com/preloader.html" %}
+    {% include "com/navibar.html" %}
+    {% include "com/sidebar.html" %}
+
+    {% include "pages/index-detail.html" %}
+    {% include "com/copyright.html" %}
+    {% include "com/right.html" %}
+  </div>
+  <!-- ./wrapper -->
+
+  {% include "com/foot.html" %}
+</body>
+
+</html>

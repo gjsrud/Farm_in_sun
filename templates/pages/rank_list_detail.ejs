@@ -1,0 +1,78 @@
+<!-- Content Wrapper. Contains page content -->
+<!-- 얘는 본문내용 -->
+<div class="content-wrapper">
+  <!-- 해당 페이지의 타이틀& 유입경로 -->
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">올림픽 국가별 메달 순위(주요국)</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">랭킹</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <!-- 컨텐츠는 한줄씩 표현 -->
+      <!-- 한줄에는 12칸으로 잡혀있다. -->
+      <div class="row">
+        <!-- 값출력 -->
+
+
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">대한민국 종합 <span id="k_rank"></span>위</h3>
+                    
+                  </div>
+
+                  <div class="card-body">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th style="width: 60px">순위</th>
+                          <th>국가명</th>
+                          <th style="width:40px">금</th>
+                          <th style="width:40px">은</th>
+                          <th style="width:40px">동</th>
+                          <th style="width:60px">합계</th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%for (let team of rankings) {%>
+                        <tr>
+                          <td id="<%= team.code%>"><%= team.id%></td>
+                          <td><%= team.name%></td>
+                          <td><%= team.gold%></td>
+                          <td><%= team.silver%></td>
+                          <td><%= team.copper%></td>
+                          <td><%= team.silver+team.gold+team.copper%></td>
+                        </tr>
+
+                        <%}%>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="card-footer clearfix" id="search_result">
+                  </div>
+                </div>
+              </div>
+      </div>
+
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
